@@ -3,53 +3,44 @@ package com.asif.fun.htmlparser.parser;
 import com.asif.fun.htmlparser.model.Indices;
 import com.asif.fun.htmlparser.model.Tag;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Created by mhussaa on 4/21/17.
  */
 public class HTMLParser {
 
-    public void parse(String html) {
+
+    public Tag parse(int startIndex, String html, int level) {
 
         boolean startTag = false;
-        for(int i = 0; i<html.length(); ++i) {
+        for(int i=startIndex; i<html.length(); ++i) {
             if(html.charAt(i) == ' ') {
                 continue;
             }
 
-            if(html.charAt(i) == '<') {
-                if(i+1 < html.length() && html.charAt(i+1) == '/') {
-                    // Ignore </hr> </br> such tags & this could be end of opened tag
-                    String tagName = getWord(i+2, html);
-                    i += tagName.length() + 1;
-
-                    if(startTag) {
-                        startTag = false;
-                    }
-
-                    continue;
+            if(html.charAt(i) == '<' && (i+1 < html.length() && html.charAt(i+1) == '/')) {
+                // end tag
+                String tagName = getWord(i+2, html);
+                i += tagName.length() + 1;
+                if(startTag) {
+                    startTag = false;
+                    level--;
                 }
-
+            } else if(html.charAt(i) == '<') {
+                // start tag
                 Tag tag = getTag(i+1, html);
                 startTag = true;
                 System.out.println(tag);
                 i += tag.getIndices().getEndIndex();
-            } else {
-                // get the body of the tag
-                StringBuilder body = new StringBuilder();
-                for(int j=i; j<html.length(); ++j) {
-                    if(html.charAt(j) == '<') {
-                        break;
-                    } else {
-                        body.append(html.charAt(j));
-                    }
+
+                if(tag.isPairedTag()) {
+                    level++;
                 }
-                System.out.println("body: " + body);
-                i += body.length();
+            } else {
+                // body of the tag
             }
         }
+
+        return null;
     }
 
     private Tag getTag(int startIndex, String content) {

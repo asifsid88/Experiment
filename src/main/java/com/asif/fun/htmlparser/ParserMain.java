@@ -21,11 +21,11 @@ public class ParserMain {
 
         while((html = br.readLine()) != null) {
             System.out.println(html);
-            System.out.println("=== Parser Output");
+            System.out.println("--- Parser Output");
 
             HTMLParser parser = new HTMLParser();
-            parser.parse(html);
-            System.out.println("=================");
+            parser.parse(0, html, 0);
+            System.out.println("-----------------");
         }
 
         System.out.println("Terminated.. !!");
