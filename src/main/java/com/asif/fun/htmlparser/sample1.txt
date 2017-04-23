@@ -1,0 +1,7 @@
+<div class=".class1 .class2 .class3 .class4-class5" id="sample" data-slot="slot"></div></br><div class="class2" id="sample2" data-slot="slot2"></div>
+<input type="button" value="pressme!!" onclick="funcionname();" />
+</hr>
+</hr>
+</br>
+</br>
+<p>hello</p>
