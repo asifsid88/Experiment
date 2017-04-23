@@ -77,8 +77,6 @@ public class HTMLParser {
                     attributeValue = attributeValue.substring(1, attributeValue.length()-1);
                 }
             }
-            // System.out.println("attributeName: " + attributeName);
-            // System.out.println("attributeValue: " + attributeValue);
             tag.addAttributes(attributeName, attributeValue);
         }
 
